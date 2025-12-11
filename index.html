@@ -4,6 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ピンホールカメラ計算機</title>
+
+  <!-- MathJax（数式表示用）-->
+  <script
+    id="MathJax-script"
+    async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+
   <style>
     :root {
       --accent: #2299ff;
@@ -358,6 +366,65 @@
       color: #9ca3af;
     }
 
+    /* ---- 計算メモ（理論）セクション ---- */
+    .notes-section {
+      margin-top: 18px;
+    }
+    .notes-toggle-btn {
+      margin-top: 0;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      background: #f9fafb;
+      color: #1f2933;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      box-shadow: none;
+      min-width: auto;
+    }
+    .notes-toggle-btn:hover {
+      background: #eef2ff;
+      border-color: var(--accent-border);
+      transform: none;
+      box-shadow: 0 0 0 1px var(--accent-soft-strong);
+    }
+    .notes-toggle-btn:active {
+      transform: none;
+      box-shadow: 0 0 0 1px var(--accent-soft-strong);
+    }
+    .notes-content {
+      margin-top: 8px;
+      padding: 12px 14px 14px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+    .notes-content h2 {
+      font-size: 1rem;
+      margin-top: 0;
+      margin-bottom: 4px;
+    }
+    .notes-content h3 {
+      font-size: 0.9rem;
+      margin-top: 10px;
+      margin-bottom: 4px;
+    }
+    .notes-content h4 {
+      font-size: 0.85rem;
+      margin-top: 8px;
+      margin-bottom: 2px;
+    }
+    .notes-content p {
+      margin-top: 4px;
+      margin-bottom: 4px;
+    }
+    .notes-content ul {
+      margin-top: 4px;
+      margin-bottom: 4px;
+      padding-left: 1.1rem;
+    }
+
     /* ---- スマホ向け調整 ---- */
     @media (max-width: 600px) {
       body {
@@ -513,6 +580,212 @@
         </div>
       </div>
 
+      <!-- 計算メモ（理論編） -->
+      <section class="notes-section">
+        <button id="toggle-notes" class="notes-toggle-btn">
+          計算の中身を見る
+        </button>
+        <div id="notes-content" class="notes-content" style="display:none;">
+          <!-- 日本語版 -->
+          <div id="notes-ja">
+            <h2>この計算機で行っている計算について</h2>
+
+            <p>
+              この計算機は、入力された
+              <strong>フォーマットサイズ（横幅 <em>W</em>・縦幅 <em>H</em>）</strong>と
+              <strong>波長 <em>λ</em></strong>、そして
+              <strong>計算モード</strong>に応じて、
+              次の量を求めています：
+            </p>
+            <ul>
+              <li>焦点距離（ピンホール〜像面距離） \(f\)</li>
+              <li>最適ピンホール径 \(d\)</li>
+              <li>F値 \(N = f/d\)</li>
+              <li>水平・垂直・対角の画角</li>
+              <li>35mm換算の焦点距離</li>
+            </ul>
+
+            <h3>1. フォーマットと波長の準備</h3>
+            <p>フィルム／印画紙サイズ：</p>
+            <p>\[
+              D = \sqrt{W^2 + H^2}
+            \]</p>
+
+            <p>波長は nm で入力されますが、計算では mm を使います：</p>
+            <p>\[
+              \lambda_{\mathrm{mm}} = \lambda_{\mathrm{nm}} \times 10^{-6}
+            \]</p>
+
+            <h3>2. モード別に焦点距離 \(f\) を求める</h3>
+
+            <h4>(A) 画角から設計</h4>
+            <p>
+              水平・垂直・対角のいずれかの画角 \(\theta\) と、
+              それに対応する長さ \(L\in\{W, H, D\}\) から、
+              単純な三角関数で焦点距離を求めます：
+            </p>
+            <p>\[
+              f = \frac{L/2}{\tan\left(\dfrac{\theta}{2}\right)}
+            \]</p>
+
+            <h4>(B) 35mm換算焦点距離から設計</h4>
+            <p>
+              フルサイズ35mm（36×24mm）の対角長を
+              \[
+                D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
+              \]
+              とすると、「35mm換算焦点距離」 \(f_{\mathrm{eq}}\) と
+              フォーマットの対角長 \(D\) から、
+              対角画角が一致するような焦点距離 \(f\) を求めます：
+            </p>
+            <p>\[
+              f = f_{\mathrm{eq}} \,\frac{D}{D_{35}}
+            \]</p>
+
+            <h4>(C) ピンホール径から設計</h4>
+            <p>
+              既に決まっているピンホール径 \(d\)（半径 \(r = d/2\)）から、
+              回折限界の条件 \(\;r^2 = f\lambda\;\) を用いて
+              焦点距離 \(f\) を逆算します：
+            </p>
+            <p>\[
+              f = \frac{r^2}{\lambda}
+              = \frac{\left(\dfrac{d}{2}\right)^2}{\lambda}
+            \]</p>
+
+            <h3>3. 最適ピンホール径と F値</h3>
+            <p>
+              焦点距離 \(f\) と波長 \(\lambda\) から、
+              Wikipedia でも紹介されている近似式
+              （レイリーの分解能条件に基づく）を使い、
+              最適ピンホール径 \(d\) を求めています：
+            </p>
+            <p>\[
+              d_{\mathrm{opt}} = 2\sqrt{f\,\lambda}
+            \]</p>
+
+            <p>そこから F値（絞り値）はレンズと同様に</p>
+            <p>\[
+              N = \frac{f}{d}
+            \]</p>
+            <p>として計算しています。</p>
+
+            <h3>4. 画角と 35mm換算</h3>
+            <p>求めた焦点距離 \(f\) に対して、各方向の画角は</p>
+            <p>\[
+              \theta_H = 2 \arctan\left(\frac{W}{2f}\right),\quad
+              \theta_V = 2 \arctan\left(\frac{H}{2f}\right),\quad
+              \theta_D = 2 \arctan\left(\frac{D}{2f}\right)
+            \]</p>
+            <p>として計算しています。</p>
+
+            <p>
+              また、得られた焦点距離 \(f\) が
+              35mmフルサイズで何 mm 相当か（対角画角ベース）は、
+            </p>
+            <p>\[
+              f_{\mathrm{eq,out}} = f\,\frac{D_{35}}{D}
+            \]</p>
+            <p>として求めています。</p>
+          </div>
+
+          <!-- 英語版 -->
+          <div id="notes-en" style="display:none;">
+            <h2>How this calculator works</h2>
+
+            <p>
+              This tool uses the input
+              <strong>format size (width <em>W</em>, height <em>H</em>)</strong>,
+              <strong>wavelength <em>λ</em></strong>, and
+              a chosen <strong>calculation mode</strong>
+              to compute:
+            </p>
+            <ul>
+              <li>Focal length (distance from pinhole to image plane) \(f\)</li>
+              <li>Optimal pinhole diameter \(d\)</li>
+              <li>F-number \(N = f/d\)</li>
+              <li>Horizontal / vertical / diagonal angles of view</li>
+              <li>35mm equivalent focal length (diagonal-based)</li>
+            </ul>
+
+            <h3>1. Format and wavelength</h3>
+            <p>Format diagonal:</p>
+            <p>\[
+              D = \sqrt{W^2 + H^2}
+            \]</p>
+
+            <p>Wavelength is entered in nm, but the computation uses mm:</p>
+            <p>\[
+              \lambda_{\mathrm{mm}} = \lambda_{\mathrm{nm}} \times 10^{-6}
+            \]</p>
+
+            <h3>2. Computing the focal length \(f\) by mode</h3>
+
+            <h4>(A) From angle of view</h4>
+            <p>
+              For a chosen angle of view \(\theta\) (horizontal / vertical /
+              diagonal) and the corresponding length
+              \(L \in \{W, H, D\}\), the focal length is:
+            </p>
+            <p>\[
+              f = \frac{L/2}{\tan\left(\dfrac{\theta}{2}\right)}
+            \]</p>
+
+            <h4>(B) From 35mm equivalent focal length</h4>
+            <p>
+              For full-frame 35mm (36×24&nbsp;mm), the diagonal is
+              \[
+                D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
+              \]
+              Given a “35mm equivalent” focal length \(f_{\mathrm{eq}}\) and
+              the format diagonal \(D\), we choose the focal length \(f\)
+              that matches the diagonal field of view:
+            </p>
+            <p>\[
+              f = f_{\mathrm{eq}} \,\frac{D}{D_{35}}
+            \]</p>
+
+            <h4>(C) From pinhole diameter</h4>
+            <p>
+              Starting from a given pinhole diameter \(d\)
+              (radius \(r = d/2\)), we use the diffraction
+              condition \(\;r^2 = f\lambda\;\) to solve for \(f\):
+            </p>
+            <p>\[
+              f = \frac{r^2}{\lambda}
+              = \frac{\left(\dfrac{d}{2}\right)^2}{\lambda}
+            \]</p>
+
+            <h3>3. Optimal pinhole and F-number</h3>
+            <p>
+              From \(f\) and \(\lambda\), the optimal pinhole diameter
+              is given by the usual approximation (also quoted on Wikipedia),
+              based on the Rayleigh criterion:
+            </p>
+            <p>\[
+              d_{\mathrm{opt}} = 2\sqrt{f\,\lambda}
+            \]</p>
+
+            <p>The F-number is then simply</p>
+            <p>\[
+              N = \frac{f}{d}
+            \]</p>
+
+            <h3>4. Angles of view and 35mm equivalent</h3>
+            <p>For the computed focal length \(f\), the angles of view are</p>
+            <p>\[
+              \theta_H = 2 \arctan\left(\frac{W}{2f}\right),\quad
+              \theta_V = 2 \arctan\left(\frac{H}{2f}\right),\quad
+              \theta_D = 2 \arctan\left(\frac{D}{2f}\right)
+            \]</p>
+
+            <p>And the 35mm-equivalent focal length (diagonal-based) is</p>
+            <p>\[
+              f_{\mathrm{eq,out}} = f\,\frac{D_{35}}{D}
+            \]</p>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -520,6 +793,7 @@
     (function () {
       var DIAG_35MM = Math.sqrt(36 * 36 + 24 * 24);
       var currentLang = "ja";
+      var notesOpen = false;
 
       var uiText = {
         ja: {
@@ -544,7 +818,7 @@
           diag: "対角画角",
           horz: "水平画角",
           vert: "垂直画角",
-          eq35: "35mm換算 焦点距離 f\u003csub\u003eeq\u003c/sub\u003e（mm）",
+          eq35: "35mm換算 焦点距離 f<sub>eq</sub>（mm）",
           hole: "ピンホール径 d（mm）",
           btnCalc: "計算",
           placeholder: "ここに設計結果が表示されます。",
@@ -600,6 +874,8 @@
             );
           },
           oriWords: { diagonal: "対角", horizontal: "水平", vertical: "垂直" },
+          notesShow: "計算の中身を見る",
+          notesHide: "計算の中身を隠す",
         },
         en: {
           title: "Pinhole Camera Calculator",
@@ -624,7 +900,7 @@
           diag: "Diagonal AoV",
           horz: "Horizontal AoV",
           vert: "Vertical AoV",
-          eq35: "35mm equiv. focal length f\u003csub\u003eeq\u003c/sub\u003e (mm)",
+          eq35: "35mm equiv. focal length f<sub>eq</sub> (mm)",
           hole: "Pinhole diameter d (mm)",
           btnCalc: "Calculate",
           placeholder: "The design result will be shown here.",
@@ -686,6 +962,8 @@
             horizontal: "horizontal",
             vertical: "vertical",
           },
+          notesShow: "Show calculation details",
+          notesHide: "Hide calculation details",
         },
       };
 
@@ -783,7 +1061,6 @@
           fMm = (rMm * rMm) / lambdaMm;
         }
 
-        // 最適ピンホール径
         if (mode === "hole") {
           dMm = holeMm;
         } else {
@@ -813,7 +1090,9 @@
         if (mode === "fov") {
           modeLabel = text.modeLabelFov;
           var oriWord = text.oriWords[fovType] || "";
-          modeDetail = text.modeDetailFov(oriWord, fovDeg);
+          modeDetail = text.modeDetailFov(fovType, fovDeg);
+          // 上の text.modeDetailFov は fovType をそのまま渡す仕様だったが、
+          // oriWord を使いたい場合はここを変えても良い
         } else if (mode === "eq35") {
           modeLabel = text.modeLabelEq;
           modeDetail = text.modeDetailEq(fEqMm);
@@ -937,6 +1216,30 @@
         $("result").innerHTML = html;
       }
 
+      function updateNotesVisibility() {
+        var text = uiText[currentLang];
+        var content = $("notes-content");
+        var btn = $("toggle-notes");
+        var notesJa = $("notes-ja");
+        var notesEn = $("notes-en");
+
+        if (content) {
+          content.style.display = notesOpen ? "block" : "none";
+        }
+        if (btn) {
+          btn.textContent = notesOpen ? text.notesHide : text.notesShow;
+        }
+        if (notesJa && notesEn) {
+          if (currentLang === "ja") {
+            notesJa.style.display = "block";
+            notesEn.style.display = "none";
+          } else {
+            notesJa.style.display = "none";
+            notesEn.style.display = "block";
+          }
+        }
+      }
+
       function applyLanguage(lang) {
         currentLang = lang === "en" ? "en" : "ja";
         document.documentElement.lang = currentLang;
@@ -975,6 +1278,8 @@
           btnEn.classList.add("active");
           btnJa.classList.remove("active");
         }
+
+        updateNotesVisibility();
       }
 
       // 言語切り替えボタン
@@ -998,6 +1303,15 @@
       }
 
       $("calcBtn").addEventListener("click", calcPinhole);
+
+      // 計算の中身トグル
+      var btnNotes = $("toggle-notes");
+      if (btnNotes) {
+        btnNotes.addEventListener("click", function () {
+          notesOpen = !notesOpen;
+          updateNotesVisibility();
+        });
+      }
 
       // 初期化
       applyLanguage("ja");
