@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>ピンホールカメラ計算機</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      margin: 0;
+      padding: 24px 12px 40px;
+      background: radial-gradient(circle at top, #e0f2fe 0, #f3f4f6 45%, #e5e7eb 100%);
+      color: #111827;
+    }
+    .app-shell {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.08),
+        0 0 0 1px rgba(148, 163, 184, 0.25);
+      padding: 20px 20px 22px;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .app-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #0f766e, #14b8a6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ecfeff;
+      font-weight: 800;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(20, 184, 166, 0.35);
+    }
+    h1 {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+    .app-subtitle {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-top: 2px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 800px) {
+      .layout-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    fieldset {
+      margin: 0;
+      padding: 12px 12px 14px;
+      border-radius: 14px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+    legend {
+      font-weight: 600;
+      padding: 0 4px;
+      font-size: 0.85rem;
+      color: #111827;
+    }
+
+    label {
+      display: block;
+      margin-top: 8px;
+      font-size: 0.83rem;
+      color: #374151;
+    }
+    input, select {
+      padding: 6px 8px;
+      margin-top: 3px;
+      min-width: 80px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 0.88rem;
+      background: #f9fafb;
+      transition: border-color 0.12s, box-shadow 0.12s, background 0.12s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #0f766e;
+      box-shadow: 0 0 0 1px rgba(15, 118, 110, 0.25);
+      background: #ffffff;
+    }
+    .inline {
+      display: inline-block;
+      margin-right: 14px;
+    }
+    small {
+      color: #6b7280;
+      font-size: 0.75rem;
+    }
+
+    /* モード選択カード */
+    .mode-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      transition: background 0.12s, border-color 0.12s, box-shadow 0.12s;
+      border: 1px solid #e5e7eb;
+      cursor: pointer;
+    }
+    .mode-card input[type="radio"] {
+      display: none;
+    }
+    .mode-card-title {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #111827;
+    }
+    .mode-card-desc {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 2px;
+    }
+    .mode-card-indicator {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 2px solid #cbd5f5;
+      margin-top: 2px;
+      flex-shrink: 0;
+      position: relative;
+      background: #ffffff;
+    }
+    .mode-card-indicator::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      background: #0f766e;
+      opacity: 0;
+      transition: opacity 0.12s;
+    }
+    .mode-card.active {
+      border-color: #0f766e;
+      background: rgba(34, 197, 174, 0.05);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    }
+    .mode-card.active .mode-card-indicator {
+      border-color: #0f766e;
+      background: #ecfdf5;
+    }
+    .mode-card.active .mode-card-indicator::after {
+      opacity: 1;
+    }
+
+    .mode-block {
+      margin-left: 22px;
+      margin-top: 6px;
+      padding: 6px 8px 8px;
+      border-radius: 10px;
+      background: #f3f4f6;
+      border: 1px dashed #e5e7eb;
+      transition: opacity 0.15s;
+      display: none; /* 初期状態は非表示 */
+    }
+
+    button {
+      margin-top: 14px;
+      padding: 9px 20px;
+      cursor: pointer;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #0f766e, #14b8a6);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow:
+        0 8px 18px rgba(15, 118, 110, 0.3),
+        0 0 0 1px rgba(15, 23, 42, 0.05);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #115e59, #0f766e);
+      transform: translateY(-0.5px);
+    }
+    button:active {
+      transform: translateY(0.5px);
+      box-shadow:
+        0 5px 12px rgba(15, 118, 110, 0.3),
+        0 0 0 1px rgba(15, 23, 42, 0.05);
+    }
+
+    .result {
+      margin-top: 0;
+      padding: 14px 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      min-height: 3em;
+      white-space: normal;
+    }
+
+    /* 結果カードUI */
+    .result-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .result-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0f172a;
+      font-size: 0.78rem;
+      border: 1px solid #bfdbfe;
+    }
+    .chip span.label {
+      font-weight: 600;
+      opacity: 0.8;
+    }
+
+    .mode-detail {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #4b5563;
+    }
+
+    .section-title {
+      margin-top: 4px;
+      margin-bottom: 4px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 9px;
+      margin-top: 4px;
+    }
+
+    .result-card {
+      border-radius: 10px;
+      padding: 9px 11px;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .result-card.main {
+      background: #020617;
+      color: #e5e7eb;
+      border-color: #020617;
+    }
+
+    .result-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7280;
+    }
+    .result-card.main .result-label {
+      color: #9ca3af;
+    }
+
+    .result-value {
+      font-size: 1.18rem;
+      font-weight: 600;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+    .result-card.main .result-value {
+      font-size: 1.22rem;
+    }
+    .unit {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    .result-sub {
+      font-size: 0.76rem;
+      color: #6b7280;
+    }
+    .result-card.main .result-sub {
+      color: #9ca3af;
+    }
+
+    .angle-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #6b7280;
+    }
+
+    .placeholder-text {
+      font-size: 0.82rem;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="card">
+      <header class="app-header">
+        <div class="app-icon">P</div>
+        <div>
+          <h1>ピンホールカメラ計算機</h1>
+          <div class="app-subtitle">
+            画角・焦点距離・ピンホール径・35mm換算をまとめて設計
+          </div>
+        </div>
+      </header>
+
+      <div class="layout-grid">
+        <!-- 左：入力エリア -->
+        <div>
+          <fieldset>
+            <legend>共通パラメータ</legend>
+
+            <label class="inline">
+              フィルム／印画紙 横幅 W（mm）
+              <br /><input id="widthMm" type="number" step="0.1" value="190" />
+            </label>
+
+            <label class="inline">
+              フィルム／印画紙 縦幅 H（mm）
+              <br /><input id="heightMm" type="number" step="0.1" value="140" />
+            </label>
+
+            <label class="inline">
+              光の波長 λ（nm）
+              <br /><input id="lambdaNm" type="number" step="1" value="500" />
+            </label>
+          </fieldset>
+
+          <fieldset style="margin-top:12px;">
+            <legend>計算モード</legend>
+
+            <label class="mode-card" data-mode="fov">
+              <span class="mode-card-indicator"></span>
+              <div>
+                <div class="mode-card-title">画角から設計</div>
+                <div class="mode-card-desc">
+                  欲しい画角（水平・垂直・対角）から、焦点距離とピンホール径を求めます。
+                </div>
+              </div>
+              <input type="radio" name="mode" value="fov" />
+            </label>
+            <div id="modeFovBlock" class="mode-block">
+              <label class="inline">
+                画角の向き
+                <br />
+                <select id="fovType">
+                  <option value="diagonal">対角画角</option>
+                  <option value="horizontal">水平画角</option>
+                  <option value="vertical">垂直画角</option>
+                </select>
+              </label>
+
+              <label class="inline">
+                目標画角 θ（度）
+                <br /><input id="fovDeg" type="number" step="0.1" value="60" />
+              </label>
+            </div>
+
+            <label class="mode-card" data-mode="eq35" style="margin-top:10px;">
+              <span class="mode-card-indicator"></span>
+              <div>
+                <div class="mode-card-title">35mm換算焦点距離から設計</div>
+                <div class="mode-card-desc">
+                  「このフォーマットでフルサイズ35mmの◯◯mm相当の画角が欲しい」というときに使います。
+                </div>
+              </div>
+              <input type="radio" name="mode" value="eq35" />
+            </label>
+            <div id="modeEq35Block" class="mode-block">
+              <label class="inline">
+                35mm換算 焦点距離 f<sub>eq</sub>（mm）
+                <br /><input id="fEqMm" type="number" step="0.1" value="50" />
+              </label>
+            </div>
+
+            <label class="mode-card" data-mode="hole" style="margin-top:10px;">
+              <span class="mode-card-indicator"></span>
+              <div>
+                <div class="mode-card-title">ピンホール径から設計</div>
+                <div class="mode-card-desc">
+                  すでに開いている穴の大きさから、最適な焦点距離と画角を求めます。
+                </div>
+              </div>
+              <input type="radio" name="mode" value="hole" />
+            </label>
+            <div id="modeHoleBlock" class="mode-block">
+              <label class="inline">
+                ピンホール径 d（mm）
+                <br /><input id="holeMm" type="number" step="0.01" value="1.00" />
+              </label>
+            </div>
+          </fieldset>
+
+          <button id="calcBtn">計算</button>
+        </div>
+
+        <!-- 右：結果エリア -->
+        <div>
+          <div id="result" class="result">
+            <div class="placeholder-text">
+              ここに設計結果が表示されます。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // 35mmフルサイズの対角長（mm）
+      var DIAG_35MM = Math.sqrt(36 * 36 + 24 * 24);
+
+      function $(id) {
+        return document.getElementById(id);
+      }
+
+      function getMode() {
+        var radios = document.getElementsByName("mode");
+        for (var i = 0; i < radios.length; i++) {
+          if (radios[i].checked) return radios[i].value;
+        }
+        return null;
+      }
+
+      function updateModeVisibility() {
+        var mode = getMode();
+
+        // 詳細入力カードの表示非表示
+        $("modeFovBlock").style.display = mode === "fov" ? "block" : "none";
+        $("modeEq35Block").style.display = mode === "eq35" ? "block" : "none";
+        $("modeHoleBlock").style.display = mode === "hole" ? "block" : "none";
+
+        // カードのスタイル
+        var cards = document.getElementsByClassName("mode-card");
+        for (var i = 0; i < cards.length; i++) {
+          var cardMode = cards[i].getAttribute("data-mode");
+          if (cardMode === mode) {
+            cards[i].classList.add("active");
+          } else {
+            cards[i].classList.remove("active");
+          }
+        }
+      }
+
+      function calcPinhole() {
+        var resultDiv = $("result");
+        var widthMm = parseFloat($("widthMm").value);
+        var heightMm = parseFloat($("heightMm").value);
+        var lambdaNm = parseFloat($("lambdaNm").value);
+
+        if (!(widthMm > 0 && heightMm > 0 && lambdaNm > 0)) {
+          resultDiv.innerHTML =
+            '<div class="placeholder-text">フィルムサイズと波長 λ を正しく入力してください（すべて正の数）。</div>';
+          return;
+        }
+
+        var mode = getMode();
+        if (!mode) {
+          resultDiv.innerHTML =
+            '<div class="placeholder-text">計算モードを選択してください。</div>';
+          return;
+        }
+
+        var lambdaMm = lambdaNm * 1e-6;
+        var diagMm = Math.sqrt(widthMm * widthMm + heightMm * heightMm);
+
+        var fMm, dMm, fNumber, thetaH, thetaV, thetaD;
+        var modeLabel = "";
+        var modeDetail = "";
+
+        if (mode === "fov") {
+          var fovType = $("fovType").value;
+          var fovDeg = parseFloat($("fovDeg").value);
+          if (!(fovDeg > 0 && fovDeg < 179)) {
+            resultDiv.innerHTML =
+              '<div class="placeholder-text">画角 θ は 0〜179度の範囲で入力してください。</div>';
+            return;
+          }
+          var L;
+          if (fovType === "horizontal") L = widthMm;
+          else if (fovType === "vertical") L = heightMm;
+          else L = diagMm;
+
+          var thetaRad = (fovDeg * Math.PI) / 180.0;
+          fMm = (L / 2.0) / Math.tan(thetaRad / 2.0);
+
+          dMm = 2.0 * Math.sqrt(fMm * lambdaMm);
+          fNumber = fMm / dMm;
+
+          thetaH = (2 * Math.atan(widthMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaV = (2 * Math.atan(heightMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaD = (2 * Math.atan(diagMm / (2 * fMm)) * 180.0) / Math.PI;
+
+          modeLabel = "画角から設計";
+          modeDetail =
+            "指定した " +
+            (fovType === "horizontal"
+              ? "水平"
+              : fovType === "vertical"
+              ? "垂直"
+              : "対角") +
+            "画角 " +
+            fovDeg.toFixed(1) +
+            "° を満たすように設計しました。";
+        } else if (mode === "eq35") {
+          var fEqMm = parseFloat($("fEqMm").value);
+          if (!(fEqMm > 0)) {
+            resultDiv.innerHTML =
+              '<div class="placeholder-text">35mm換算焦点距離 f_eq を正しく入力してください（正の数）。</div>';
+            return;
+          }
+          fMm = fEqMm * (diagMm / DIAG_35MM);
+
+          dMm = 2.0 * Math.sqrt(fMm * lambdaMm);
+          fNumber = fMm / dMm;
+
+          thetaH = (2 * Math.atan(widthMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaV = (2 * Math.atan(heightMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaD = (2 * Math.atan(diagMm / (2 * fMm)) * 180.0) / Math.PI;
+
+          modeLabel = "35mm換算から設計";
+          modeDetail =
+            "フルサイズ35mm換算 " +
+            fEqMm.toFixed(1) +
+            "mm と同じ対角画角になるように設計しました。";
+        } else {
+          var holeMm = parseFloat($("holeMm").value);
+          if (!(holeMm > 0)) {
+            resultDiv.innerHTML =
+              '<div class="placeholder-text">ピンホール径 d を正しく入力してください（正の数）。</div>';
+            return;
+          }
+          var rMm = holeMm / 2.0;
+          fMm = (rMm * rMm) / lambdaMm;
+
+          dMm = holeMm;
+          fNumber = fMm / dMm;
+
+          thetaH = (2 * Math.atan(widthMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaV = (2 * Math.atan(heightMm / (2 * fMm)) * 180.0) / Math.PI;
+          thetaD = (2 * Math.atan(diagMm / (2 * fMm)) * 180.0) / Math.PI;
+
+          modeLabel = "ピンホール径から設計";
+          modeDetail =
+            "指定したピンホール径 d = " +
+            holeMm.toFixed(3) +
+            "mm に対して最適な焦点距離と画角を求めました。";
+        }
+
+        var fEqOut = fMm * (DIAG_35MM / diagMm);
+
+        var formatText =
+          "W " +
+          widthMm.toFixed(1) +
+          " mm × H " +
+          heightMm.toFixed(1) +
+          " mm（対角 " +
+          diagMm.toFixed(1) +
+          " mm）";
+
+        var html = "";
+        html += '<div class="result-section">';
+        html += '  <div class="result-chips">';
+        html +=
+          '    <span class="chip"><span class="label">フォーマット</span>' +
+          formatText +
+          "</span>";
+        html +=
+          '    <span class="chip"><span class="label">波長</span>λ = ' +
+          lambdaNm.toFixed(0) +
+          " nm</span>";
+        html +=
+          '    <span class="chip"><span class="label">モード</span>' +
+          modeLabel +
+          "</span>";
+        html += "  </div>";
+
+        html += '  <p class="mode-detail">' + modeDetail + "</p>";
+
+        html += '  <div class="section-title">設計結果</div>';
+        html += '  <div class="result-grid">';
+        html += '    <div class="result-card main">';
+        html += '      <div class="result-label">焦点距離</div>';
+        html +=
+          '      <div class="result-value">' +
+          fMm.toFixed(2) +
+          '<span class="unit">mm</span></div>';
+        html += '      <div class="result-sub">ピンホール〜像面距離</div>';
+        html += "    </div>";
+
+        html += '    <div class="result-card">';
+        html += '      <div class="result-label">ピンホール径</div>';
+        html +=
+          '      <div class="result-value">' +
+          dMm.toFixed(3) +
+          '<span class="unit">mm</span></div>';
+        html += '      <div class="result-sub">Wikipedia の r²/λ の最適条件</div>';
+        html += "    </div>";
+
+        html += '    <div class="result-card">';
+        html += '      <div class="result-label">F値（目安）</div>';
+        html +=
+          '      <div class="result-value">F/' +
+          fNumber.toFixed(0) +
+          "</div>";
+        html +=
+          '      <div class="result-sub">露出計算のときはこの F値として扱う</div>';
+        html += "    </div>";
+
+        html += '    <div class="result-card">';
+        html += '      <div class="result-label">35mm換算焦点距離</div>';
+        html +=
+          '      <div class="result-value">' +
+          fEqOut.toFixed(1) +
+          '<span class="unit">mm</span></div>';
+        html +=
+          '      <div class="result-sub">フルサイズ35mmと同等の対角画角</div>';
+        html += "    </div>";
+        html += "  </div>";
+
+        html += '  <div class="section-title">この設計での画角</div>';
+        html += '  <div class="result-grid">';
+        html += '    <div class="result-card">';
+        html += '      <div class="angle-badge">水平</div>';
+        html +=
+          '      <div class="result-value">' +
+          thetaH.toFixed(1) +
+          '<span class="unit">°</span></div>';
+        html += '      <div class="result-sub">横幅 W に対する画角</div>';
+        html += "    </div>";
+
+        html += '    <div class="result-card">';
+        html += '      <div class="angle-badge">垂直</div>';
+        html +=
+          '      <div class="result-value">' +
+          thetaV.toFixed(1) +
+          '<span class="unit">°</span></div>';
+        html += '      <div class="result-sub">縦幅 H に対する画角</div>';
+        html += "    </div>";
+
+        html += '    <div class="result-card">';
+        html += '      <div class="angle-badge">対角</div>';
+        html +=
+          '      <div class="result-value">' +
+          thetaD.toFixed(1) +
+          '<span class="unit">°</span></div>';
+        html += '      <div class="result-sub">対角長に対する画角</div>';
+        html += "    </div>";
+        html += "  </div>";
+
+        html += "</div>";
+
+        resultDiv.innerHTML = html;
+      }
+
+      // イベント設定（カードクリックで選択）
+      var cards = document.getElementsByClassName("mode-card");
+      for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function (e) {
+          var radio = this.querySelector('input[type="radio"]');
+          if (radio) {
+            radio.checked = true;
+            updateModeVisibility();
+          }
+        });
+      }
+
+      document.getElementById("calcBtn").addEventListener("click", calcPinhole);
+      updateModeVisibility();
+    })();
+  </script>
+</body>
+</html>
