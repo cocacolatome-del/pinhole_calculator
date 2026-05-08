@@ -23,6 +23,7 @@
     * {
       box-sizing: border-box;
     }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
@@ -30,10 +31,12 @@
       background: #ffffff;
       color: #111827;
     }
+
     .app-shell {
       max-width: 900px;
       margin: 0 auto;
     }
+
     .card {
       background: #ffffff;
       border-radius: 18px;
@@ -50,12 +53,14 @@
       gap: 10px;
       margin-bottom: 14px;
     }
+
     .header-left {
       display: flex;
       align-items: center;
       gap: 10px;
       min-width: 0;
     }
+
     .app-icon {
       width: 30px;
       height: 30px;
@@ -70,10 +75,12 @@
       box-shadow: 0 4px 10px rgba(34, 153, 255, 0.4);
       flex-shrink: 0;
     }
+
     h1 {
       font-size: 1.25rem;
       margin: 0;
     }
+
     .app-subtitle {
       font-size: 0.82rem;
       color: #4b5563;
@@ -85,6 +92,7 @@
       gap: 6px;
       flex-shrink: 0;
     }
+
     .lang-btn {
       border-radius: 999px;
       border: 1px solid #d1d5db;
@@ -97,6 +105,7 @@
       align-items: center;
       gap: 4px;
     }
+
     .lang-btn.active {
       border-color: var(--accent-border);
       background: var(--accent-soft);
@@ -109,6 +118,7 @@
       gap: 12px;
       margin-top: 10px;
     }
+
     @media (max-width: 800px) {
       .layout-grid {
         grid-template-columns: minmax(0, 1fr);
@@ -122,6 +132,7 @@
       border: 1px solid #e5e7eb;
       background: #f9fafb;
     }
+
     legend {
       font-weight: 600;
       padding: 0 4px;
@@ -135,7 +146,9 @@
       font-size: 0.82rem;
       color: #374151;
     }
-    input, select {
+
+    input,
+    select {
       padding: 6px 8px;
       margin-top: 3px;
       min-width: 80px;
@@ -145,22 +158,25 @@
       background: #f9fafb;
       transition: border-color 0.12s, box-shadow 0.12s, background 0.12s;
     }
-    input:focus, select:focus {
+
+    input:focus,
+    select:focus {
       outline: none;
       border-color: var(--accent-border);
       box-shadow: 0 0 0 1px var(--accent-soft-strong);
       background: #ffffff;
     }
+
     .inline {
       display: inline-block;
       margin-right: 14px;
     }
+
     small {
       color: #6b7280;
       font-size: 0.74rem;
     }
 
-    /* ---- モード選択カード ---- */
     .mode-card {
       display: flex;
       align-items: flex-start;
@@ -172,19 +188,23 @@
       border: 1px solid #e5e7eb;
       cursor: pointer;
     }
+
     .mode-card input[type="radio"] {
       display: none;
     }
+
     .mode-card-title {
       font-size: 0.85rem;
       font-weight: 600;
       color: #111827;
     }
+
     .mode-card-desc {
       font-size: 0.78rem;
       color: #6b7280;
       margin-top: 2px;
     }
+
     .mode-card-indicator {
       width: 16px;
       height: 16px;
@@ -195,6 +215,7 @@
       position: relative;
       background: #ffffff;
     }
+
     .mode-card-indicator::after {
       content: "";
       position: absolute;
@@ -204,16 +225,19 @@
       opacity: 0;
       transition: opacity 0.12s;
     }
+
     .mode-card.active {
       border-color: var(--accent-border);
       background: var(--accent-soft);
       box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
       transform: translateY(-0.5px);
     }
+
     .mode-card.active .mode-card-indicator {
       border-color: var(--accent-border);
       background: #eff6ff;
     }
+
     .mode-card.active .mode-card-indicator::after {
       opacity: 1;
     }
@@ -247,10 +271,12 @@
       justify-content: center;
       min-width: 96px;
     }
+
     button:hover {
       background: linear-gradient(135deg, #2089e1, var(--accent));
       transform: translateY(-0.5px);
     }
+
     button:active {
       transform: translateY(0.4px);
       box-shadow:
@@ -269,17 +295,18 @@
       white-space: normal;
     }
 
-    /* ---- 結果カードUI ---- */
     .result-section {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+
     .result-chips {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
+
     .chip {
       display: inline-flex;
       align-items: center;
@@ -291,6 +318,7 @@
       font-size: 0.78rem;
       border: 1px solid rgba(34, 153, 255, 0.3);
     }
+
     .chip span.label {
       font-weight: 600;
       opacity: 0.8;
@@ -326,9 +354,6 @@
       flex-direction: column;
       gap: 2px;
     }
-    .result-card.main {
-      /* 他カードと同じトーンに統一 */
-    }
 
     .result-label {
       font-size: 0.76rem;
@@ -344,10 +369,12 @@
       align-items: baseline;
       gap: 4px;
     }
+
     .unit {
       font-size: 0.8rem;
       opacity: 0.8;
     }
+
     .result-sub {
       font-size: 0.76rem;
       color: #6b7280;
@@ -366,10 +393,10 @@
       color: #9ca3af;
     }
 
-    /* ---- 計算メモ（理論）セクション ---- */
     .notes-section {
       margin-top: 18px;
     }
+
     .notes-toggle-btn {
       margin-top: 0;
       padding: 6px 14px;
@@ -381,16 +408,14 @@
       box-shadow: none;
       min-width: auto;
     }
+
     .notes-toggle-btn:hover {
       background: #eef2ff;
       border-color: var(--accent-border);
       transform: none;
       box-shadow: 0 0 0 1px var(--accent-soft-strong);
     }
-    .notes-toggle-btn:active {
-      transform: none;
-      box-shadow: 0 0 0 1px var(--accent-soft-strong);
-    }
+
     .notes-content {
       margin-top: 8px;
       padding: 12px 14px 14px;
@@ -400,67 +425,81 @@
       font-size: 0.86rem;
       line-height: 1.7;
     }
+
     .notes-content h2 {
       font-size: 1rem;
       margin-top: 0;
       margin-bottom: 4px;
     }
+
     .notes-content h3 {
       font-size: 0.9rem;
       margin-top: 10px;
       margin-bottom: 4px;
     }
+
     .notes-content h4 {
       font-size: 0.85rem;
       margin-top: 8px;
       margin-bottom: 2px;
     }
+
     .notes-content p {
       margin-top: 4px;
       margin-bottom: 4px;
     }
+
     .notes-content ul {
       margin-top: 4px;
       margin-bottom: 4px;
       padding-left: 1.1rem;
     }
 
-    /* ---- スマホ向け調整 ---- */
     @media (max-width: 600px) {
       body {
         padding: 12px 8px 22px;
       }
+
       .card {
         padding: 14px 12px 18px;
         border-radius: 16px;
       }
+
       .app-header {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
       }
+
       .lang-switch {
         justify-content: flex-end;
       }
+
       .layout-grid {
         gap: 10px;
       }
+
       .inline {
         display: block;
         margin-right: 0;
       }
-      input, select {
+
+      input,
+      select {
         width: 100%;
       }
+
       .mode-block {
         margin-left: 0;
       }
+
       fieldset {
         padding: 10px 8px 12px;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="app-shell">
     <div class="card">
@@ -481,7 +520,6 @@
       </header>
 
       <div class="layout-grid">
-        <!-- 左：入力エリア -->
         <div>
           <fieldset>
             <legend id="legend-common">共通パラメータ</legend>
@@ -537,7 +575,7 @@
               <div>
                 <div class="mode-card-title" id="mode-eq-title">35mm換算焦点距離から設計</div>
                 <div class="mode-card-desc" id="mode-eq-desc">
-                  「このフォーマットでフルサイズ35mmの◯◯mm相当の画角が欲しい」というときに使います。
+                  35mm換算の焦点距離から、同じ対角画角になるように設計します。
                 </div>
               </div>
               <input type="radio" name="mode" value="eq35" />
@@ -546,6 +584,23 @@
               <label class="inline">
                 <span id="label-eq35">35mm換算 焦点距離 f<sub>eq</sub>（mm）</span>
                 <br /><input id="fEqMm" type="number" step="0.1" value="50" />
+              </label>
+            </div>
+
+            <label class="mode-card" data-mode="focal" style="margin-top:10px;">
+              <span class="mode-card-indicator"></span>
+              <div>
+                <div class="mode-card-title" id="mode-focal-title">焦点距離から設計</div>
+                <div class="mode-card-desc" id="mode-focal-desc">
+                  ピンホール〜像面距離を直接指定して、最適なピンホール径と画角を求めます。
+                </div>
+              </div>
+              <input type="radio" name="mode" value="focal" />
+            </label>
+            <div id="modeFocalBlock" class="mode-block">
+              <label class="inline">
+                <span id="label-focal">焦点距離 f（mm）</span>
+                <br /><input id="focalMm" type="number" step="0.1" value="200" />
               </label>
             </div>
 
@@ -570,7 +625,6 @@
           <button id="calcBtn">計算</button>
         </div>
 
-        <!-- 右：結果エリア -->
         <div>
           <div id="result" class="result">
             <div class="placeholder-text" id="placeholder">
@@ -580,13 +634,12 @@
         </div>
       </div>
 
-      <!-- 計算メモ（理論編） -->
       <section class="notes-section">
         <button id="toggle-notes" class="notes-toggle-btn">
           計算の中身を見る
         </button>
+
         <div id="notes-content" class="notes-content" style="display:none;">
-          <!-- 日本語版 -->
           <div id="notes-ja">
             <h2>この計算機で行っている計算について</h2>
 
@@ -595,8 +648,9 @@
               <strong>フォーマットサイズ（横幅 <em>W</em>・縦幅 <em>H</em>）</strong>と
               <strong>波長 <em>λ</em></strong>、そして
               <strong>計算モード</strong>に応じて、
-              次の量を求めています：
+              次の量を求めています。
             </p>
+
             <ul>
               <li>焦点距離（ピンホール〜像面距離） \(f\)</li>
               <li>最適ピンホール径 \(d\)</li>
@@ -605,181 +659,137 @@
               <li>35mm換算の焦点距離</li>
             </ul>
 
-            <h3>1. フォーマットと波長の準備</h3>
-            <p>フィルム／印画紙サイズ：</p>
+            <h3>1. フォーマットと波長</h3>
             <p>\[
               D = \sqrt{W^2 + H^2}
             \]</p>
 
-            <p>波長は nm で入力されますが、計算では mm を使います：</p>
             <p>\[
               \lambda_{\mathrm{mm}} = \lambda_{\mathrm{nm}} \times 10^{-6}
             \]</p>
 
-            <h3>2. モード別に焦点距離 \(f\) を求める</h3>
+            <h3>2. モード別の焦点距離</h3>
 
             <h4>(A) 画角から設計</h4>
-            <p>
-              水平・垂直・対角のいずれかの画角 \(\theta\) と、
-              それに対応する長さ \(L\in\{W, H, D\}\) から、
-              単純な三角関数で焦点距離を求めます：
-            </p>
             <p>\[
               f = \frac{L/2}{\tan\left(\dfrac{\theta}{2}\right)}
             \]</p>
 
             <h4>(B) 35mm換算焦点距離から設計</h4>
-            <p>
-              フルサイズ35mm（36×24mm）の対角長を
-              \[
-                D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
-              \]
-              とすると、「35mm換算焦点距離」 \(f_{\mathrm{eq}}\) と
-              フォーマットの対角長 \(D\) から、
-              対角画角が一致するような焦点距離 \(f\) を求めます：
-            </p>
+            <p>\[
+              D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
+            \]</p>
             <p>\[
               f = f_{\mathrm{eq}} \,\frac{D}{D_{35}}
             \]</p>
 
-            <h4>(C) ピンホール径から設計</h4>
+            <h4>(C) 焦点距離から設計</h4>
             <p>
-              既に決まっているピンホール径 \(d\)（半径 \(r = d/2\)）から、
-              回折限界の条件 \(\;r^2 = f\lambda\;\) を用いて
-              焦点距離 \(f\) を逆算します：
+              焦点距離を直接指定する場合は、その値をそのまま使用します。
             </p>
+            <p>\[
+              f = f_{\mathrm{input}}
+            \]</p>
+
+            <h4>(D) ピンホール径から設計</h4>
             <p>\[
               f = \frac{r^2}{\lambda}
               = \frac{\left(\dfrac{d}{2}\right)^2}{\lambda}
             \]</p>
 
-            <h3>3. 最適ピンホール径と F値</h3>
-            <p>
-              焦点距離 \(f\) と波長 \(\lambda\) から、
-              Wikipedia でも紹介されている近似式
-              （レイリーの分解能条件に基づく）を使い、
-              最適ピンホール径 \(d\) を求めています：
-            </p>
+            <h3>3. 最適ピンホール径とF値</h3>
             <p>\[
               d_{\mathrm{opt}} = 2\sqrt{f\,\lambda}
             \]</p>
 
-            <p>そこから F値（絞り値）はレンズと同様に</p>
             <p>\[
               N = \frac{f}{d}
             \]</p>
-            <p>として計算しています。</p>
 
-            <h3>4. 画角と 35mm換算</h3>
-            <p>求めた焦点距離 \(f\) に対して、各方向の画角は</p>
+            <h3>4. 画角と35mm換算</h3>
             <p>\[
               \theta_H = 2 \arctan\left(\frac{W}{2f}\right),\quad
               \theta_V = 2 \arctan\left(\frac{H}{2f}\right),\quad
               \theta_D = 2 \arctan\left(\frac{D}{2f}\right)
             \]</p>
-            <p>として計算しています。</p>
 
-            <p>
-              また、得られた焦点距離 \(f\) が
-              35mmフルサイズで何 mm 相当か（対角画角ベース）は、
-            </p>
             <p>\[
               f_{\mathrm{eq,out}} = f\,\frac{D_{35}}{D}
             \]</p>
-            <p>として求めています。</p>
           </div>
 
-          <!-- 英語版 -->
           <div id="notes-en" style="display:none;">
             <h2>How this calculator works</h2>
 
             <p>
-              This tool uses the input
+              This calculator uses the input
               <strong>format size (width <em>W</em>, height <em>H</em>)</strong>,
               <strong>wavelength <em>λ</em></strong>, and
-              a chosen <strong>calculation mode</strong>
-              to compute:
+              a selected <strong>calculation mode</strong> to compute:
             </p>
+
             <ul>
-              <li>Focal length (distance from pinhole to image plane) \(f\)</li>
+              <li>Focal length \(f\)</li>
               <li>Optimal pinhole diameter \(d\)</li>
               <li>F-number \(N = f/d\)</li>
               <li>Horizontal / vertical / diagonal angles of view</li>
-              <li>35mm equivalent focal length (diagonal-based)</li>
+              <li>35mm equivalent focal length</li>
             </ul>
 
             <h3>1. Format and wavelength</h3>
-            <p>Format diagonal:</p>
             <p>\[
               D = \sqrt{W^2 + H^2}
             \]</p>
 
-            <p>Wavelength is entered in nm, but the computation uses mm:</p>
             <p>\[
               \lambda_{\mathrm{mm}} = \lambda_{\mathrm{nm}} \times 10^{-6}
             \]</p>
 
-            <h3>2. Computing the focal length \(f\) by mode</h3>
+            <h3>2. Focal length by mode</h3>
 
             <h4>(A) From angle of view</h4>
-            <p>
-              For a chosen angle of view \(\theta\) (horizontal / vertical /
-              diagonal) and the corresponding length
-              \(L \in \{W, H, D\}\), the focal length is:
-            </p>
             <p>\[
               f = \frac{L/2}{\tan\left(\dfrac{\theta}{2}\right)}
             \]</p>
 
             <h4>(B) From 35mm equivalent focal length</h4>
-            <p>
-              For full-frame 35mm (36×24&nbsp;mm), the diagonal is
-              \[
-                D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
-              \]
-              Given a “35mm equivalent” focal length \(f_{\mathrm{eq}}\) and
-              the format diagonal \(D\), we choose the focal length \(f\)
-              that matches the diagonal field of view:
-            </p>
+            <p>\[
+              D_{35} = \sqrt{36^2 + 24^2}\,\mathrm{mm}
+            \]</p>
             <p>\[
               f = f_{\mathrm{eq}} \,\frac{D}{D_{35}}
             \]</p>
 
-            <h4>(C) From pinhole diameter</h4>
+            <h4>(C) From focal length</h4>
             <p>
-              Starting from a given pinhole diameter \(d\)
-              (radius \(r = d/2\)), we use the diffraction
-              condition \(\;r^2 = f\lambda\;\) to solve for \(f\):
+              When a focal length is entered directly, the calculator uses that value as-is.
             </p>
+            <p>\[
+              f = f_{\mathrm{input}}
+            \]</p>
+
+            <h4>(D) From pinhole diameter</h4>
             <p>\[
               f = \frac{r^2}{\lambda}
               = \frac{\left(\dfrac{d}{2}\right)^2}{\lambda}
             \]</p>
 
             <h3>3. Optimal pinhole and F-number</h3>
-            <p>
-              From \(f\) and \(\lambda\), the optimal pinhole diameter
-              is given by the usual approximation (also quoted on Wikipedia),
-              based on the Rayleigh criterion:
-            </p>
             <p>\[
               d_{\mathrm{opt}} = 2\sqrt{f\,\lambda}
             \]</p>
 
-            <p>The F-number is then simply</p>
             <p>\[
               N = \frac{f}{d}
             \]</p>
 
             <h3>4. Angles of view and 35mm equivalent</h3>
-            <p>For the computed focal length \(f\), the angles of view are</p>
             <p>\[
               \theta_H = 2 \arctan\left(\frac{W}{2f}\right),\quad
               \theta_V = 2 \arctan\left(\frac{H}{2f}\right),\quad
               \theta_D = 2 \arctan\left(\frac{D}{2f}\right)
             \]</p>
 
-            <p>And the 35mm-equivalent focal length (diagonal-based) is</p>
             <p>\[
               f_{\mathrm{eq,out}} = f\,\frac{D_{35}}{D}
             \]</p>
@@ -804,167 +814,167 @@
           width: "フィルム／印画紙 横幅 W（mm）",
           height: "フィルム／印画紙 縦幅 H（mm）",
           lambda: "光の波長 λ（nm）",
+
           modeFovTitle: "画角から設計",
-          modeFovDesc:
-            "欲しい画角（水平・垂直・対角）から、焦点距離とピンホール径を求めます。",
+          modeFovDesc: "欲しい画角（水平・垂直・対角）から、焦点距離とピンホール径を求めます。",
+
           modeEqTitle: "35mm換算焦点距離から設計",
-          modeEqDesc:
-            "「このフォーマットでフルサイズ35mmの◯◯mm相当の画角が欲しい」というときに使います。",
+          modeEqDesc: "35mm換算の焦点距離から、同じ対角画角になるように設計します。",
+
+          modeFocalTitle: "焦点距離から設計",
+          modeFocalDesc: "ピンホール〜像面距離を直接指定して、最適なピンホール径と画角を求めます。",
+
           modeHoleTitle: "ピンホール径から設計",
-          modeHoleDesc:
-            "すでに開いている穴の大きさから、最適な焦点距離と画角を求めます。",
+          modeHoleDesc: "すでに開いている穴の大きさから、最適な焦点距離と画角を求めます。",
+
           fovDir: "画角の向き",
           fovVal: "目標画角 θ（度）",
           diag: "対角画角",
           horz: "水平画角",
           vert: "垂直画角",
           eq35: "35mm換算 焦点距離 f<sub>eq</sub>（mm）",
+          focal: "焦点距離 f（mm）",
           hole: "ピンホール径 d（mm）",
           btnCalc: "計算",
           placeholder: "ここに設計結果が表示されます。",
-          errCommon:
-            "フィルムサイズと波長 λ を正しく入力してください（すべて正の数）。",
+
+          errCommon: "フィルムサイズと波長 λ を正しく入力してください（すべて正の数）。",
           errMode: "計算モードを選択してください。",
           errFov: "画角 θ は 0〜179度の範囲で入力してください。",
           errEq: "35mm換算焦点距離 f_eq を正しく入力してください（正の数）。",
+          errFocal: "焦点距離 f を正しく入力してください（正の数）。",
           errHole: "ピンホール径 d を正しく入力してください（正の数）。",
+
           chipFormat: "フォーマット",
           chipLambda: "波長",
           chipMode: "モード",
           designTitle: "設計結果",
           anglesTitle: "この設計での画角",
+
           labelFocus: "焦点距離",
           labelHole: "ピンホール径",
           labelF: "F値（目安）",
           labelEq35: "35mm換算焦点距離",
+
           subFocus: "ピンホール〜像面距離",
           subHole: "Wikipedia の r²/λ の最適条件",
           subF: "露出計算のときはこの F値として扱う",
           subEq35: "フルサイズ35mmと同等の対角画角",
+
           angH: "水平",
           angV: "垂直",
           angD: "対角",
           subAngH: "横幅 W に対する画角",
           subAngV: "縦幅 H に対する画角",
           subAngD: "対角長に対する画角",
+
           modeLabelFov: "画角から設計",
           modeLabelEq: "35mm換算から設計",
+          modeLabelFocal: "焦点距離から設計",
           modeLabelHole: "ピンホール径から設計",
+
           modeDetailFov: function (oriWord, theta) {
-            return (
-              "指定した " +
-              oriWord +
-              "画角 θ = " +
-              theta.toFixed(1) +
-              "° を満たすように設計しました。"
-            );
+            return "指定した " + oriWord + "画角 θ = " + theta.toFixed(1) + "° を満たすように設計しました。";
           },
           modeDetailEq: function (fEq) {
-            return (
-              "フルサイズ35mm換算 " +
-              fEq.toFixed(1) +
-              "mm と同じ対角画角になるように設計しました。"
-            );
+            return "35mm換算 " + fEq.toFixed(1) + "mm と同じ対角画角になるように設計しました。";
+          },
+          modeDetailFocal: function (f) {
+            return "指定した焦点距離 f = " + f.toFixed(1) + "mm に対して最適なピンホール径と画角を求めました。";
           },
           modeDetailHole: function (d) {
-            return (
-              "指定したピンホール径 d = " +
-              d.toFixed(3) +
-              "mm に対して最適な焦点距離と画角を求めました。"
-            );
+            return "指定したピンホール径 d = " + d.toFixed(3) + "mm に対して最適な焦点距離と画角を求めました。";
           },
+
           oriWords: { diagonal: "対角", horizontal: "水平", vertical: "垂直" },
           notesShow: "計算の中身を見る",
-          notesHide: "計算の中身を隠す",
+          notesHide: "計算の中身を隠す"
         },
+
         en: {
           title: "Pinhole Camera Calculator",
-          subtitle:
-            "Design angle of view, focal length, pinhole size, and 35mm equivalent",
+          subtitle: "Design angle of view, focal length, pinhole size, and 35mm equivalent",
           legendCommon: "Common parameters",
           legendMode: "Calculation mode",
           width: "Film / paper width W (mm)",
           height: "Film / paper height H (mm)",
           lambda: "Wavelength λ (nm)",
+
           modeFovTitle: "Design from angle of view",
-          modeFovDesc:
-            "Choose a desired angle of view (horizontal / vertical / diagonal) to compute focal length and pinhole size.",
+          modeFovDesc: "Choose a desired angle of view to compute focal length and pinhole size.",
+
           modeEqTitle: "Design from 35mm equivalent focal length",
-          modeEqDesc:
-            "Use this when you want this format to match the diagonal field-of-view of a full-frame focal length.",
+          modeEqDesc: "Use a 35mm equivalent focal length to match the same diagonal field of view.",
+
+          modeFocalTitle: "Design from focal length",
+          modeFocalDesc: "Enter the distance from pinhole to image plane directly, then compute pinhole size and field of view.",
+
           modeHoleTitle: "Design from pinhole size",
-          modeHoleDesc:
-            "Start from an existing pinhole diameter and compute the optimal focal length and field of view.",
+          modeHoleDesc: "Start from an existing pinhole diameter and compute the optimal focal length and field of view.",
+
           fovDir: "Angle direction",
           fovVal: "Target AoV θ (deg)",
           diag: "Diagonal AoV",
           horz: "Horizontal AoV",
           vert: "Vertical AoV",
           eq35: "35mm equiv. focal length f<sub>eq</sub> (mm)",
+          focal: "Focal length f (mm)",
           hole: "Pinhole diameter d (mm)",
           btnCalc: "Calculate",
           placeholder: "The design result will be shown here.",
-          errCommon:
-            "Please enter positive values for film size and wavelength λ.",
+
+          errCommon: "Please enter positive values for film size and wavelength λ.",
           errMode: "Please select a calculation mode.",
           errFov: "Angle θ must be between 0 and 179 degrees.",
-          errEq:
-            "Please enter a valid 35mm equivalent focal length f_eq (positive number).",
-          errHole:
-            "Please enter a valid pinhole diameter d (positive number).",
+          errEq: "Please enter a valid 35mm equivalent focal length f_eq.",
+          errFocal: "Please enter a valid focal length f.",
+          errHole: "Please enter a valid pinhole diameter d.",
+
           chipFormat: "Format",
           chipLambda: "Wavelength",
           chipMode: "Mode",
           designTitle: "Design result",
           anglesTitle: "Angles with this design",
+
           labelFocus: "Focal length",
           labelHole: "Pinhole diameter",
-          labelF: "F-number (approx.)",
+          labelF: "F-number",
           labelEq35: "35mm equiv. focal length",
+
           subFocus: "Distance from pinhole to image plane",
           subHole: "Diffraction optimum d = 2√(fλ)",
           subF: "Use this N as the f-number for exposure",
           subEq35: "Diagonal field of view equivalent to full-frame",
+
           angH: "Horizontal",
           angV: "Vertical",
           angD: "Diagonal",
           subAngH: "Angle along width W",
           subAngV: "Angle along height H",
           subAngD: "Angle along the diagonal",
+
           modeLabelFov: "From angle of view",
           modeLabelEq: "From 35mm equiv.",
+          modeLabelFocal: "From focal length",
           modeLabelHole: "From pinhole size",
+
           modeDetailFov: function (oriWord, theta) {
-            return (
-              "Designed to match " +
-              oriWord +
-              " angle θ = " +
-              theta.toFixed(1) +
-              "°."
-            );
+            return "Designed to match " + oriWord + " angle θ = " + theta.toFixed(1) + "°.";
           },
           modeDetailEq: function (fEq) {
-            return (
-              "Designed to have the same diagonal field of view as a " +
-              fEq.toFixed(1) +
-              " mm full-frame lens."
-            );
+            return "Designed to match the diagonal field of view of a " + fEq.toFixed(1) + " mm full-frame lens.";
+          },
+          modeDetailFocal: function (f) {
+            return "Computed the optimal pinhole diameter and field of view for focal length f = " + f.toFixed(1) + " mm.";
           },
           modeDetailHole: function (d) {
-            return (
-              "Computed the optimal focal length and field of view for a pinhole diameter d = " +
-              d.toFixed(3) +
-              " mm."
-            );
+            return "Computed the optimal focal length and field of view for pinhole diameter d = " + d.toFixed(3) + " mm.";
           },
-          oriWords: {
-            diagonal: "diagonal",
-            horizontal: "horizontal",
-            vertical: "vertical",
-          },
+
+          oriWords: { diagonal: "diagonal", horizontal: "horizontal", vertical: "vertical" },
           notesShow: "Show calculation details",
-          notesHide: "Hide calculation details",
-        },
+          notesHide: "Hide calculation details"
+        }
       };
 
       function $(id) {
@@ -981,8 +991,10 @@
 
       function updateModeVisibility() {
         var mode = getMode();
+
         $("modeFovBlock").style.display = mode === "fov" ? "block" : "none";
         $("modeEq35Block").style.display = mode === "eq35" ? "block" : "none";
+        $("modeFocalBlock").style.display = mode === "focal" ? "block" : "none";
         $("modeHoleBlock").style.display = mode === "hole" ? "block" : "none";
 
         var cards = document.getElementsByClassName("mode-card");
@@ -1028,15 +1040,18 @@
         var fovType = null;
         var fovDeg = null;
         var fEqMm = null;
+        var focalMm = null;
         var holeMm = null;
 
         if (mode === "fov") {
           fovType = $("fovType").value;
           fovDeg = parseFloat($("fovDeg").value);
+
           if (!(fovDeg > 0 && fovDeg < 179)) {
             renderPlaceholder("errFov");
             return;
           }
+
           var L;
           if (fovType === "horizontal") L = widthMm;
           else if (fovType === "vertical") L = heightMm;
@@ -1044,19 +1059,35 @@
 
           var thetaRad = (fovDeg * Math.PI) / 180.0;
           fMm = (L / 2.0) / Math.tan(thetaRad / 2.0);
+
         } else if (mode === "eq35") {
           fEqMm = parseFloat($("fEqMm").value);
+
           if (!(fEqMm > 0)) {
             renderPlaceholder("errEq");
             return;
           }
+
           fMm = fEqMm * (diagMm / DIAG_35MM);
-        } else {
+
+        } else if (mode === "focal") {
+          focalMm = parseFloat($("focalMm").value);
+
+          if (!(focalMm > 0)) {
+            renderPlaceholder("errFocal");
+            return;
+          }
+
+          fMm = focalMm;
+
+        } else if (mode === "hole") {
           holeMm = parseFloat($("holeMm").value);
+
           if (!(holeMm > 0)) {
             renderPlaceholder("errHole");
             return;
           }
+
           var rMm = holeMm / 2.0;
           fMm = (rMm * rMm) / lambdaMm;
         }
@@ -1066,6 +1097,7 @@
         } else {
           dMm = 2.0 * Math.sqrt(fMm * lambdaMm);
         }
+
         fNumber = fMm / dMm;
 
         thetaH = (2 * Math.atan(widthMm / (2 * fMm)) * 180.0) / Math.PI;
@@ -1089,13 +1121,13 @@
 
         if (mode === "fov") {
           modeLabel = text.modeLabelFov;
-          var oriWord = text.oriWords[fovType] || "";
-          modeDetail = text.modeDetailFov(fovType, fovDeg);
-          // 上の text.modeDetailFov は fovType をそのまま渡す仕様だったが、
-          // oriWord を使いたい場合はここを変えても良い
+          modeDetail = text.modeDetailFov(text.oriWords[fovType], fovDeg);
         } else if (mode === "eq35") {
           modeLabel = text.modeLabelEq;
           modeDetail = text.modeDetailEq(fEqMm);
+        } else if (mode === "focal") {
+          modeLabel = text.modeLabelFocal;
+          modeDetail = text.modeDetailFocal(focalMm);
         } else {
           modeLabel = text.modeLabelHole;
           modeDetail = text.modeDetailHole(holeMm);
@@ -1126,91 +1158,78 @@
 
         html += '  <p class="mode-detail">' + modeDetail + "</p>";
 
-        html +=
-          '  <div class="section-title">' + text.designTitle + "</div>";
+        html += '  <div class="section-title">' + text.designTitle + "</div>";
         html += '  <div class="result-grid">';
+
         html += '    <div class="result-card main">';
-        html +=
-          '      <div class="result-label">' + text.labelFocus + "</div>";
+        html += '      <div class="result-label">' + text.labelFocus + "</div>";
         html +=
           '      <div class="result-value">' +
           fMm.toFixed(2) +
           '<span class="unit">mm</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subFocus + "</div>";
+        html += '      <div class="result-sub">' + text.subFocus + "</div>";
         html += "    </div>";
 
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="result-label">' + text.labelHole + "</div>";
+        html += '      <div class="result-label">' + text.labelHole + "</div>";
         html +=
           '      <div class="result-value">' +
           dMm.toFixed(3) +
           '<span class="unit">mm</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subHole + "</div>";
+        html += '      <div class="result-sub">' + text.subHole + "</div>";
         html += "    </div>";
 
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="result-label">' + text.labelF + "</div>";
+        html += '      <div class="result-label">' + text.labelF + "</div>";
         html +=
           '      <div class="result-value">F/' +
           fNumber.toFixed(0) +
           "</div>";
-        html +=
-          '      <div class="result-sub">' + text.subF + "</div>";
+        html += '      <div class="result-sub">' + text.subF + "</div>";
         html += "    </div>";
 
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="result-label">' + text.labelEq35 + "</div>";
+        html += '      <div class="result-label">' + text.labelEq35 + "</div>";
         html +=
           '      <div class="result-value">' +
           fEqOut.toFixed(1) +
           '<span class="unit">mm</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subEq35 + "</div>";
+        html += '      <div class="result-sub">' + text.subEq35 + "</div>";
         html += "    </div>";
+
         html += "  </div>";
 
-        html +=
-          '  <div class="section-title">' + text.anglesTitle + "</div>";
+        html += '  <div class="section-title">' + text.anglesTitle + "</div>";
         html += '  <div class="result-grid">';
+
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="angle-badge">' + text.angH + "</div>";
+        html += '      <div class="angle-badge">' + text.angH + "</div>";
         html +=
           '      <div class="result-value">' +
           thetaH.toFixed(1) +
           '<span class="unit">°</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subAngH + "</div>";
+        html += '      <div class="result-sub">' + text.subAngH + "</div>";
         html += "    </div>";
 
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="angle-badge">' + text.angV + "</div>";
+        html += '      <div class="angle-badge">' + text.angV + "</div>";
         html +=
           '      <div class="result-value">' +
           thetaV.toFixed(1) +
           '<span class="unit">°</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subAngV + "</div>";
+        html += '      <div class="result-sub">' + text.subAngV + "</div>";
         html += "    </div>";
 
         html += '    <div class="result-card">';
-        html +=
-          '      <div class="angle-badge">' + text.angD + "</div>";
+        html += '      <div class="angle-badge">' + text.angD + "</div>";
         html +=
           '      <div class="result-value">' +
           thetaD.toFixed(1) +
           '<span class="unit">°</span></div>';
-        html +=
-          '      <div class="result-sub">' + text.subAngD + "</div>";
+        html += '      <div class="result-sub">' + text.subAngD + "</div>";
         html += "    </div>";
-        html += "  </div>";
 
+        html += "  </div>";
         html += "</div>";
 
         $("result").innerHTML = html;
@@ -1218,79 +1237,83 @@
 
       function updateNotesVisibility() {
         var text = uiText[currentLang];
-        var content = $("notes-content");
-        var btn = $("toggle-notes");
-        var notesJa = $("notes-ja");
-        var notesEn = $("notes-en");
 
-        if (content) {
-          content.style.display = notesOpen ? "block" : "none";
+        $("notes-content").style.display = notesOpen ? "block" : "none";
+        $("toggle-notes").textContent = notesOpen ? text.notesHide : text.notesShow;
+
+        if (currentLang === "ja") {
+          $("notes-ja").style.display = "block";
+          $("notes-en").style.display = "none";
+        } else {
+          $("notes-ja").style.display = "none";
+          $("notes-en").style.display = "block";
         }
-        if (btn) {
-          btn.textContent = notesOpen ? text.notesHide : text.notesShow;
-        }
-        if (notesJa && notesEn) {
-          if (currentLang === "ja") {
-            notesJa.style.display = "block";
-            notesEn.style.display = "none";
-          } else {
-            notesJa.style.display = "none";
-            notesEn.style.display = "block";
-          }
+
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          MathJax.typesetPromise();
         }
       }
 
       function applyLanguage(lang) {
         currentLang = lang === "en" ? "en" : "ja";
         document.documentElement.lang = currentLang;
+
         var text = uiText[currentLang];
 
         $("title").textContent = text.title;
         $("subtitle").textContent = text.subtitle;
         $("legend-common").textContent = text.legendCommon;
         $("legend-mode").textContent = text.legendMode;
+
         $("label-width").textContent = text.width;
         $("label-height").textContent = text.height;
         $("label-lambda").textContent = text.lambda;
+
         $("mode-fov-title").textContent = text.modeFovTitle;
         $("mode-fov-desc").textContent = text.modeFovDesc;
+
         $("mode-eq-title").textContent = text.modeEqTitle;
         $("mode-eq-desc").textContent = text.modeEqDesc;
+
+        $("mode-focal-title").textContent = text.modeFocalTitle;
+        $("mode-focal-desc").textContent = text.modeFocalDesc;
+
         $("mode-hole-title").textContent = text.modeHoleTitle;
         $("mode-hole-desc").textContent = text.modeHoleDesc;
+
         $("label-fov-dir").textContent = text.fovDir;
         $("label-fov-val").textContent = text.fovVal;
+
         $("opt-diagonal").textContent = text.diag;
         $("opt-horizontal").textContent = text.horz;
         $("opt-vertical").textContent = text.vert;
+
         $("label-eq35").innerHTML = text.eq35;
+        $("label-focal").textContent = text.focal;
         $("label-hole").textContent = text.hole;
+
         $("calcBtn").textContent = text.btnCalc;
         $("placeholder").textContent = text.placeholder;
 
-        // 言語ボタンの見た目
-        var btnJa = $("btn-ja");
-        var btnEn = $("btn-en");
         if (currentLang === "ja") {
-          btnJa.classList.add("active");
-          btnEn.classList.remove("active");
+          $("btn-ja").classList.add("active");
+          $("btn-en").classList.remove("active");
         } else {
-          btnEn.classList.add("active");
-          btnJa.classList.remove("active");
+          $("btn-en").classList.add("active");
+          $("btn-ja").classList.remove("active");
         }
 
         updateNotesVisibility();
       }
 
-      // 言語切り替えボタン
       $("btn-ja").addEventListener("click", function () {
         applyLanguage("ja");
       });
+
       $("btn-en").addEventListener("click", function () {
         applyLanguage("en");
       });
 
-      // モードカードクリックで選択
       var cards = document.getElementsByClassName("mode-card");
       for (var i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function () {
@@ -1304,16 +1327,11 @@
 
       $("calcBtn").addEventListener("click", calcPinhole);
 
-      // 計算の中身トグル
-      var btnNotes = $("toggle-notes");
-      if (btnNotes) {
-        btnNotes.addEventListener("click", function () {
-          notesOpen = !notesOpen;
-          updateNotesVisibility();
-        });
-      }
+      $("toggle-notes").addEventListener("click", function () {
+        notesOpen = !notesOpen;
+        updateNotesVisibility();
+      });
 
-      // 初期化
       applyLanguage("ja");
       updateModeVisibility();
     })();
